@@ -3,9 +3,13 @@
 I don't use Docker to host my Plex Media Server because it ran like garbage on my QNAP.  Here's docker-compose files for all the other useful stuff though. 
 
 **FlareSolverr**: http://(host):8191
+
 **Transmission**: http://(host):9091
+
 **Jackett**: http://(host):8191
+
 **Sonarr**: http://(host):8191
+
 **Radarr**: http://(host):8191
 
 # Usage
