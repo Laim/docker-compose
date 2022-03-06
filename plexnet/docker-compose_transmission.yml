@@ -1,0 +1,37 @@
+---
+version: "2.1"
+
+networks:
+  plexnet: # custom network for plex media server
+    external: true
+    
+    
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission # always pull the latest image unless you want a custom one
+    container_name: transmission
+    environment:
+      - PUID=0 # change this to your docker runner user, default to admin (bad)
+      - PGID=0 # change this to your docker runner group, default to admin (bad)
+      - TZ=Europe/London
+      #- TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=user #optional -- username you use to login to transmission
+      - PASS=pass123 #optional -- password you use to login to transmission
+      #- WHITELIST=192.168.0.5 #optional
+      #- HOST_WHITELIST=dnsnane list #optional
+    volumes:
+      - /AppData/Transmission/config:/config # linking the docker directory to your server directory, change BEFORE the colon :
+      - /Multimedia/Downloads:/downloads # linking the docker directory to your server directory, change BEFORE the colon :
+      #- <path to watch folder>:/watch
+    ports:
+      - 9091:9091 # Web portal will be accessible on http://host:9091
+      - 51413:51413
+      - 51413:51413/udp
+    networks:
+      - plexnet
+    deploy: # limits the amount of resource that transmission can use, i find 128M of RAM good enough
+      resources:
+          limits:
+            cpus: 0.50
+            memory: 128M 
+    restart: unless-stopped # if we crash, restart

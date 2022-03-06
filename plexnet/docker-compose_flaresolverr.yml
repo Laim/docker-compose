@@ -1,0 +1,21 @@
+---
+version: "2.1"
+
+networks:
+  plexnet: # custom network for plex media server
+    external: true
+
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest # always pull the latest image unless you want a custom one
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/London
+    ports:
+      - "${PORT:-8191}:8191" # Web portal/api will be accessible on http://host:8191
+    networks:
+      - plexnet
+    restart: unless-stopped # if we crash, restart

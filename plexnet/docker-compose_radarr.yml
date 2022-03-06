@@ -1,0 +1,29 @@
+---
+version: "2.1"
+
+networks:
+  plexnet: # custom network for plex media server
+    external: true
+    
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr # always pull the latest image unless you want a custom one
+    container_name: radarr
+    environment:
+      - PUID=0 # change this to your docker runner user, default to admin (bad)
+      - PGID=0 # change this to your docker runner group, default to admin (bad)
+      - TZ=Europe/London
+    volumes:
+      - /AppData/Radarr/config:/config # linking the docker directory to your server directory, change BEFORE the colon :
+      - /Multimedia/Movies:/movies # linking the docker directory to your server directory, change BEFORE the colon :
+      - /Multimedia/Downloads:/downloads # linking the docker directory to your server directory, change BEFORE the colon :
+    ports:
+      - 7878:7878 # Web portal will be accessible on http://host:7878
+    networks:
+      - plexnet
+    deploy: # limits the amount of resource that radarr can use, i find 128M of RAM good enough
+      resources:
+          limits:
+            cpus: 0.50
+            memory: 128M 
+    restart: unless-stopped # if we crash, restart
