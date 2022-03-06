@@ -1,4 +1,4 @@
-# docker-compose\plexnet
+# docker-compose/plexnet
 
 I don't use Docker to host my Plex Media Server because it ran like garbage on my QNAP.  Here's docker-compose files for all the other useful stuff though. 
 
