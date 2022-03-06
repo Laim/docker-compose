@@ -6,11 +6,11 @@ I don't use Docker to host my Plex Media Server because it ran like garbage on m
 
 **Transmission**: http://(host):9091
 
-**Jackett**: http://(host):8191
+**Jackett**: http://(host):9117
 
-**Sonarr**: http://(host):8191
+**Sonarr**: http://(host):8989
 
-**Radarr**: http://(host):8191
+**Radarr**: http://(host):7878
 
 # Usage
 
