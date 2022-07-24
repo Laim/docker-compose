@@ -1,0 +1,27 @@
+---
+version: "2.1"
+
+networks:
+  plexnet: # custom network for plex media server
+    external: true
+
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=100 # change this to your docker runner user
+      - PGID=100 # change this to your docker runner group
+      - TZ=Europe/London
+    volumes:
+      - /AppData/Prowlarr/config:/config
+    ports:
+      - 9696:9696 # Web portal will be accessible on http://host:9696
+    networks:
+      - plexnet
+    deploy:  # limits the amount of resource that jackett can use, i find 128M of RAM good enough
+      resources:
+          limits:
+            cpus: 0.10
+            memory: 128M 
+    restart: unless-stopped # if we crash, restart

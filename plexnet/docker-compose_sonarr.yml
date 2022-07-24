@@ -25,5 +25,5 @@ services:
       resources:
           limits:
             cpus: 0.50
-            memory: 128M 
+            memory: 1000M 
     restart: unless-stopped # if we crash, restart

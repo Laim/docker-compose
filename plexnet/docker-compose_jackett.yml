@@ -2,7 +2,7 @@
 version: "2.1"
 
 networks:
-  plexnet:
+  plexnet: # custom network for plex media server
     external: true
 
 services:
