@@ -20,7 +20,7 @@ docker-compose up -d
 # /bin/sleep 30 #30 seconds
 # echo ">> Leaving sleep..."
 
-cd /share/CACHEDEV1_DATA/AppData/Gluetun
+cd /share/CACHEDEV1_DATA/AppData/GluetunVPN
 echo "      ++ Entered Gluetun"
 docker-compose up -d
 echo ">> We're going to sleep for 1 minute to allow Gluetun to boot up completely"
