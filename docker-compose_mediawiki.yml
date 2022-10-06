@@ -4,7 +4,7 @@ services:
   web:
     image: mediawiki
     ports:
-      - 4200:80 # internal docker port 80, media wiki accessible at https://host:4200
+      - 4441:80 # internal docker port 80, media wiki accessible at http://host:4441
     environment:
       - PUID=0 # change this to your docker runner user, default to admin (bad)
       - PGUID=0 # change this to your docker runner user, default to admin (bad)
@@ -12,7 +12,7 @@ services:
       - ./LocalSettings.php:/var/www/html/LocalSettings.php # linking the docker directory to your server directory, change BEFORE the colon :
       - /AppData/Wiki/database:/var/www/data # linking the docker directory to your server directory, change BEFORE the colon :
       - /AppData/Wiki/image:/var/www/html/images # linking the docker directory to your server directory, change BEFORE the colon :
-    deploy: # limits the amount of resource that transmission can use, i find 128M of RAM good enough
+    deploy: # limits the amount of resource that mediawiki can use, i find 512M of RAM good enough but can be 128M etc
       resources:
           limits:
             cpus: 0.50
