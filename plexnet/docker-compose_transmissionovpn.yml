@@ -1,0 +1,47 @@
+## NOTE: This does NOT work with ProtonVPN FREE tier, you have to be a paid customer.
+---
+version: "2.1"
+
+networks:
+  plexnet:
+    external: true
+
+services:
+  transmission-openvpn:
+    image: haugene/transmission-openvpn
+    container_name: transmissionovpn
+    cap_add:
+        - NET_ADMIN
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/London
+      - OPENVPN_PROVIDER=PROTONVPN
+      - OPENVPN_CONFIG=nl.protonvpn.udp
+      - OPENVPN_USERNAME=userhere
+      - OPENVPN_PASSWORD=passwordhere
+      - DISABLE_PORT_UPDATER=true
+      - LOCAL_NETWORK=192.168.0.0/16 ## this is so you can access the web gui since its wrapped in a OVPN wrapper, see docs from haugene
+      # Transmission Options
+      - TRANSMISSION_IDLE_SEEDING_LIMIT=0
+      - TRANSMISSION_IDLE_SEEDING_LIMIT_ENABLED=true
+      - TRANSMISSION_RPC_USERNAME=administrator
+      - TRANSMISSION_RPC_PASSWORD=qnap
+      - TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true
+
+    volumes:
+      - /AppData/Transmission/config:/config
+      - /Multimedia/Downloads:/downloads
+      #- <path to watch folder>:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    networks:
+      - plexnet
+    deploy:
+      resources:
+          limits:
+            cpus: '0.50'
+            memory: 128M 
+    restart: unless-stopped
